@@ -9,8 +9,6 @@ function App() {
         <div className="App">
             <h2>Graphs </h2>
             <Charts/>
-         
-          
         </div>
     );
 }
