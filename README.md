@@ -30,7 +30,10 @@ I did use mongodb remotely therefore i used the cluster variable
 4- The backend is only sending 10 records and are displayed in the ui, you can  modify the data api to show more records 
 
 5- I did left a file called "smallFile.json" inside the server folder , it has only 2  documents to test the app against monogodb ,  when the ui running for the first time,
-6- you need to replace it  the big json file.
+
+
+6- you need to replace it with  the big json file.
+
 
 7- the query for the data is made fetch the documents where the instances has more then 5 fields, just to make the heatmap working good 
 
