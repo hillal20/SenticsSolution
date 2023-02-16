@@ -7,12 +7,9 @@ import React, { useEffect} from 'react';
 
 const  HeatMapComponent = ({data, dataType, duration})=>  {
 
-   
     useEffect(()=> {
-       
-        
+
     }, [ dataType, duration ]);
-    
     
     console.log('data ==> ', data);
     const newSeries =data.map(e => {
@@ -64,9 +61,7 @@ const  HeatMapComponent = ({data, dataType, duration})=>  {
         const container =   document.querySelector('#heatmap');
        
         if(container){
-            console.log('container ===> ', container);
             let  chart = new ApexCharts(container, options);
-            console.log('chart ==> ', chart);
             if(chart && data.length ){
                 chart.render();
             }
@@ -74,7 +69,7 @@ const  HeatMapComponent = ({data, dataType, duration})=>  {
         }
     }
     return  (<div>
-        <h1>heatMap</h1>
+        <h1>HeatMap</h1>
         <div id="heatmap"></div>
     </div>);
   

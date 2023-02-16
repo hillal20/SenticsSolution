@@ -47,23 +47,12 @@ server.get('/api/data/:duration', async (req, res) => {
         try {
             const {duration} = req.params;
             const {date} = req.query;
-            console.log('duration ==> ', duration);
-            console.log('date ==> ', date);
             await client.connect();
             const database = client.db(dbName);
             const collection  = database.collection(collectionName);
             const data = await  collection.aggregate([
                 {
-                    $match:
-                    {
-                        // _id: {
-                        //     $in: [
-                        //         new ObjectId('631dad359fbc895818809423'),
-                        //         new ObjectId('631dad359fbc895818809424'),
-                        //         new ObjectId('631dad359fbc895818809425'),
-                        //     ],
-                        // },
-                    },
+                    $match:{},
                 },
                 {
                     $addFields:

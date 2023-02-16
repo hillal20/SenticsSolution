@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import Charts from './charts/Charts';
+import Charts from './charts/Chart';
 
 
 function App() {

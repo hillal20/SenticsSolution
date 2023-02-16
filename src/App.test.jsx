@@ -7,7 +7,7 @@ import App from './App';
 
 it('App is rendered without issues ', ()=> {
     render(<App/>);
-    const header = screen.getByText(/Unites Converter/);
+    const header = screen.getByText(/Chart/);
     expect(header).toBeInTheDocument();
 });
     

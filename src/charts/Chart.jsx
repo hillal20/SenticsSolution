@@ -62,7 +62,7 @@ function Charts() {
     
     return (
         <div>
-            <h2>Graph </h2>
+            <h2>Chart</h2>
             <div>
                 <label><strong>Type:</strong></label>
                 <select onChange={(e) => setDataType(e.target.value)}>
