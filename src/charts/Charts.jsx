@@ -11,16 +11,17 @@ ChartJs.register(LineElement,CategoryScale,LinearScale, PointElement);
 function Charts() {
     const [data, setData] = useState([]);
     const [dataType, setDataType] = useState('num_people');
-   
+    const [duration, setDuration ] = useState('6');
+    const date = '2022-09-11'; // it is  a hard coded date , this need to be implemented in the ui via clender pick
     useEffect(() => {
     // Fetch data from backend API
-        axios.get('http://localhost:9000/api/data')
+        axios.get(`http://localhost:9000/api/data/${duration}?date=${date}`)
             .then((response) => {
                 setData(response.data);
             });
     }, []);
 
-    // Get x-axis and y-axis data for the selected data type
+  
     const getXData = () => {
         return data.map((d) => (new Date(d.timestamp)).toISOString().substring(14, 19));
     };
@@ -29,13 +30,15 @@ function Charts() {
         if (dataType === 'num_people') {
             return data.map((d) => Object.keys(d.instances).length);
         } else if (dataType === 'x_pos') {
-            return data.map((d) => d.instances[1]?.pos_x);
+            return data.map((d) => d.instances[1]?.pos_x || 0);
         }
     };
 
     // Chart configuration
     const chartData = {
         labels: getXData(),
+        height: 400,
+        width: 700,
         datasets: [
             {
                 label: dataType,
@@ -50,35 +53,34 @@ function Charts() {
     const chartOptions = {
         scales: {
             x: {
-                // type: 'time',
-                // time: {
-                //     unit: 'minute',
-                // },
             },
             y: {
                 beginAtZero: true,
             },
         },
     };
-    console.log(' x data ===> ', getXData());
-    console.log('y data ===> ', getYData());
-    console.log('data ===> ', data);
-    //const heatMapData = data.map(d => ({x: d.instances[1]?.pos_x, y: d.instances[1]?.pos_y, value: Object.keys(d.instances).length, time: d.timestamp} ));
-   
+    
     return (
         <div>
+            <h2>Graph </h2>
             <div>
-                <label>Data type:</label>
+                <label><strong>Type:</strong></label>
                 <select onChange={(e) => setDataType(e.target.value)}>
                     <option value="num_people">Number of people</option>
                     <option value="x_pos">X position of human</option>
+                </select>
+                <label><strong>Last</strong></label>
+                <select onChange={(e) => setDuration(e.target.value)}>
+                    <option value="6">6H</option>
+                    <option value="12">12H</option>
+                    <option value="24">24H</option>
                 </select>
             </div>
             <div>
                 <Line data={chartData} options={chartOptions} />
             </div>
             <div>
-                <HeatMapComponent data={data} />
+                <HeatMapComponent data={data} dataType={dataType}  duration={duration} />
             </div>
         </div>
     );

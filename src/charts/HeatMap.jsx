@@ -1,16 +1,37 @@
 
 
 import ApexCharts from 'apexcharts';
-import React from 'react';
+import PropTypes from 'proptypes';
+import React, { useEffect} from 'react';
 
-const  HeatMapComponent = ({data = []})=>  {
+
+const  HeatMapComponent = ({data, dataType, duration})=>  {
+
+   
+    useEffect(()=> {
+       
+        
+    }, [ dataType, duration ]);
     
-    const newSeries =data.map(e => ({name: e.timestamp.substr(14,16), data: [19, 78, 6, 21, 62, 6, 27]}));
-    console.log('heatMapData ====>  ', newSeries);
+    
+    console.log('data ==> ', data);
+    const newSeries =data.map(e => {
+        const name = `y =  ${e.instances[1]['pos_y']}`;
+        const allData = [];
+        for(let instance in  e.instances){
+            allData.push(e.instances[instance]['pos_x']);
+        }
+        return  {
+            name,
+            data: allData
+        };
+        
+    });
     var options = {
         series: newSeries,
         chart: {
-            height: 350,
+            height: 500,
+            width: 700,
             type: 'heatmap',
         },
         dataLabels: {
@@ -27,15 +48,7 @@ const  HeatMapComponent = ({data = []})=>  {
             '#BAFF29'],
         xaxis: {
             type: 'category',
-            categories: [
-                '10:00',
-                '10:30',
-                '11:00',
-                '11:30',
-                '12:00',
-                '12:30',
-                '01:00',
-            ]
+            categories: data.map(e => e.timestamp.substr(14,16))
         },
         grid: {
             padding: {
@@ -43,21 +56,33 @@ const  HeatMapComponent = ({data = []})=>  {
             }
         },
         title: {
-            text: 'HeatMap Chart (Single color)'
+            text: 'Human locations across time'
         },
     };
 
-    var chart = new ApexCharts(document.querySelector('#chart'), options);
-   
-    chart.render();
+    if(document){
+        const container =   document.querySelector('#heatmap');
+       
+        if(container){
+            console.log('container ===> ', container);
+            let  chart = new ApexCharts(container, options);
+            console.log('chart ==> ', chart);
+            if(chart && data.length ){
+                chart.render();
+            }
+          
+        }
+    }
     return  (<div>
         <h1>heatMap</h1>
-        <div id="chart"></div>
-    
-       
+        <div id="heatmap"></div>
     </div>);
   
 };
-
+HeatMapComponent.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    duration: PropTypes.string,
+    dataType: PropTypes.string
+};
 export default HeatMapComponent;
 
