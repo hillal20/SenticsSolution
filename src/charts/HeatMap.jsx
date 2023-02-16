@@ -10,8 +10,6 @@ const  HeatMapComponent = ({data, dataType, duration})=>  {
     useEffect(()=> {
 
     }, [ dataType, duration ]);
-    
-    console.log('data ==> ', data);
     const newSeries =data.map(e => {
         const name = `y =  ${e.instances[1]['pos_y']}`;
         const allData = [];

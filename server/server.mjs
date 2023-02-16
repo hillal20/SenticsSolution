@@ -153,7 +153,7 @@ server.post('/update', async (req, res) => {
         });
         client.close();
     }catch(err){
-        console.log('err in reading the file ', err.message);
+        console.log('!!! err in reading the file !!! ', err.message);
         res.status(401).json({ err: err.message});
         client.close();
     }
